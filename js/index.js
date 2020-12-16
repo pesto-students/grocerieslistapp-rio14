@@ -61,37 +61,41 @@ function loadCurrentUserData() {
   groceryList();
 }
 
-function createGroceries() {
-  let groceryName = document.getElementById("myGrocery").value;
-  if (groceryName === "") {
+function checkGroceries(item) {
+  if (item === "") {
     onError("enter grocery name");
     return;
   } else if (maxItem === 5) {
     onError(`can not add more than 5 items`);
+  } else if (item.split(" ").length > 1) {
+    onError(`can not add space character`);
   } else {
-    if (
-      currentUserData.includes(groceryName) ||
-      selectedGrocery === groceryName
-    ) {
+    if (currentUserData.includes(item) || selectedGrocery === item) {
       onError("grocery already present");
     } else {
-      currentUserData.push(groceryName);
-      maxItem -= 1;
-      document.getElementById("myText").innerHTML = maxItem;
-      document.getElementById("showLeftItem").style.visibility = "visible";
-      userDetail[currentUserIndex]["groceries"] = currentUserData;
-      localStorage.setItem("users", JSON.stringify(userDetail));
-      groceryList();
-      updateMaxItem();
-      document.getElementById("myGrocery").value = "";
+      return true;
     }
   }
+}
+function createGroceries() {
+  let groceryName = document.getElementById("myGrocery").value;
+  const res = checkGroceries(groceryName);
+  if (res) {
+    currentUserData.push(groceryName);
+    maxItem -= 1;
+    document.getElementById("myText").innerHTML = maxItem;
+    document.getElementById("showLeftItem").style.visibility = "visible";
+    userDetail[currentUserIndex]["groceries"] = currentUserData;
+    localStorage.setItem("users", JSON.stringify(userDetail));
+    groceryList();
+    updateMaxItem();
+    document.getElementById("myGrocery").value = "";
+  } else return;
 }
 
 function updateMaxItem() {
   maxItem = currentUserData.length;
-  console.log(maxItem);
-  document.getElementById("myText").innerHTML = `Item left to add in list: ${
+  document.getElementById("myText").innerHTML = `Item left to add in list${
     maxItem - 5
   }`;
 }
@@ -113,8 +117,8 @@ function groceryList() {
       deleteButton.classList.add("buttonRed");
       deleteButton.innerHTML = "delete";
       deleteButton.addEventListener("click", () => deleteGroceryItem(item));
-      groceryItemLi.classList.add(item);
-      groceryItemLi.addEventListener("click", () => highlight(item));
+      // groceryItemLi.classList.add(item);
+      // groceryItemLi.addEventListener("click", () => highlight(item));
       groceryItemLi.appendChild(deleteButton);
       groceryItemLi.appendChild(editButton);
       groceryListContainer.appendChild(groceryItemLi);
@@ -124,12 +128,34 @@ function groceryList() {
 
 function highlight(item) {
   console.log("highlight", item);
+  var element = document.getElementById();
+  element.classList.add("mystyle");
 }
 function editGroceryItem(item) {
+  document.getElementById("add").style.visibility = "hidden";
+  document.getElementById("update").style.visibility = "visible";
+  document.getElementById("cancel").style.visibility = "visible";
   document.getElementById("myGrocery").value = item;
   selectedGrocery = item;
-  currentUserData[currentUserData.indexOf(item)] = item;
-  console.log(currentUserData);
+}
+
+function update() {
+  let groceryName = document.getElementById("myGrocery").value;
+  const res = checkGroceries(groceryName);
+  if (res) {
+    currentUserData[currentUserData.indexOf(selectedGrocery)] = groceryName;
+    userDetail[currentUserIndex]["groceries"] = currentUserData;
+    localStorage.setItem("users", JSON.stringify(userDetail));
+    groceryList();
+    cancel();
+  }
+}
+function cancel() {
+  selectedGrocery = "";
+  document.getElementById("myGrocery").value = "";
+  document.getElementById("add").style.visibility = "visible";
+  document.getElementById("update").style.visibility = "hidden";
+  document.getElementById("cancel").style.visibility = "hidden";
 }
 function deleteGroceryItem(groceryItem) {
   currentUserData = currentUserData.filter((item) => item != groceryItem);
@@ -159,7 +185,7 @@ function logOut() {
 }
 function refreshList() {
   deleteAllGroceryItem();
-  groceryList;
+  groceryList();
 }
 
 function auth() {
@@ -168,6 +194,8 @@ function auth() {
     document.getElementById("showCreateNewUser").style.visibility = "hidden";
     document.getElementById("myDIV").style.visibility = "visible";
     document.getElementById("myUL").style.visibility = "visible";
+    document.getElementById("update").style.visibility = "hidden";
+    document.getElementById("cancel").style.visibility = "hidden";
   } else {
     document.getElementById("showCreateNewUser").style.visibility = "visible";
     document.getElementById("myDIV").style.visibility = "hidden";

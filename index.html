@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Groceries List App</title>
-    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./style/index.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -20,18 +20,23 @@
       <h2 style="margin: 5px">My Groceries List</h2>
       <div class="profile">
         <h3 id="displayName"></h3>
-        <span onclick="logOut()" class="" id="addGrocery"
+        <span onclick="logOut()" class="addGrocery" id="signOut"
         ><i class="fa fa-sign-out icon"></i
       ></span>
       </div>
       <h4 id="showLeftItem"><span id="myText"></span></h4>
       <input type="text" id="myGrocery" placeholder="Grocery..." />
-      <span onclick="createGroceries()" class="" id="addGrocery"
+      <span onclick="createGroceries()" class="addGrocery" id="add"
         ><i class="fa fa-plus icon"></i
       ></span>
+      <br />
+      <div class="btnDiv">
+      <span onclick="update()" class="addBtn" id="update">Update</span>
+      <span onclick="cancel()" class="addBtn" id="cancel">Cancel</span>
+      </div>
     </div>
 
     <ul id="myUL">
-    <script src="./index.js"></script>
+    <script src="./js/index.js"></script>
   </body>
 </html>
