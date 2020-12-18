@@ -62,6 +62,7 @@ function loadCurrentUserData() {
 }
 
 function checkGroceries(item) {
+  loadData();
   if (item === "") {
     onError("enter grocery name");
     return;
