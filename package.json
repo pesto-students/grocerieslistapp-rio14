@@ -1,0 +1,23 @@
+{
+  "name": "groceries-list-app",
+  "version": "1.0.0",
+  "description": "week1 project for pesto",
+  "main": "index.js",
+  "dependencies": {
+    "cypress": "^6.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rio14/WeekOneGroceryIListApp.git"
+  },
+  "author": "ritesh sinha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rio14/WeekOneGroceryIListApp/issues"
+  },
+  "homepage": "https://github.com/rio14/WeekOneGroceryIListApp#readme"
+}
